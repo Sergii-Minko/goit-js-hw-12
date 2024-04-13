@@ -37,7 +37,7 @@ const onSearchFormSubmit = morePhotos => async event => {
   try {
     loaderEl.classList.add('is-visible');
 
-    const { data } = await fetchPhotosByQuery(searchQuery, pageNumber);
+    const { data } = await fetchPhotosByQuery(searchQuery, pageNumber, perPage);
     loaderEl.classList.remove('is-visible');
     const totalPages = Math.ceil(data.totalHits / perPage);
     if (!morePhotos && data.hits.length === 0) {
