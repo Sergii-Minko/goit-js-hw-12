@@ -172,7 +172,7 @@ section {
   transform: translate(-50%, -50%);
   transition: opacity var(--animation-duration) var(--timing-function);
   transition: visibility var(--animation-duration) var(--timing-function);
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   margin-top: 30px;
 }
 .loader:before,
@@ -270,7 +270,6 @@ section {
   visibility: hidden;
   border: 0;
   cursor: pointer;
-  margin-left: 4px;
   border-radius: 8px;
   padding: 8px 16px;
   width: 150px;
@@ -282,6 +281,7 @@ section {
   line-height: 150%;
   letter-spacing: 0.04em;
   color: #fff;
+  margin-bottom: 30;
 }
 
 .more-search-btn:hover,
