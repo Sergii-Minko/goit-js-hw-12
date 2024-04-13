@@ -11,7 +11,7 @@ export const fetchPhotosByQuery = (query, pageNumber = 1) => {
       orientation: 'horizontal',
       safesearch: true,
       page: pageNumber,
-      per_page: 15,
+      per_page: 40,
     },
   };
 

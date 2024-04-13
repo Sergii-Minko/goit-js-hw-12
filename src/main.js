@@ -18,7 +18,7 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 let pageNumber = 1;
-const perPage = 15;
+const perPage = 40;
 
 const onSearchFormSubmit = morePhotos => async event => {
   event.preventDefault();
@@ -31,6 +31,7 @@ const onSearchFormSubmit = morePhotos => async event => {
     return;
   }
   if (!morePhotos) {
+    pageNumber = 1;
     galleryEl.innerHTML = '';
   }
   try {
