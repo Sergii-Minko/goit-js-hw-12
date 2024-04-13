@@ -5,71 +5,82 @@ import { fetchPhotosByQuery } from './js/pixabay-api';
 import {
   createGalleryCardsTemplate,
   getToastSettings,
+  getToastSettingsEnd,
+  customizeLightbox,
 } from './js/render-functions';
 const galleryEl = document.querySelector('.js-gallery');
+const submitButtonEl = document.querySelector('.search-btn');
+const moresearchEl = document.querySelector('.more-search-btn');
 const loaderEl = document.querySelector('.js-loader');
 const inputEl = document.querySelector('.js-search-input');
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
+let pageNumber = 1;
+const perPage = 15;
 
-const onSearchFormSubmit = event => {
+const onSearchFormSubmit = morePhotos => async event => {
   event.preventDefault();
-
   const searchQuery = inputEl.value.trim();
 
-  if (searchQuery === '' || searchQuery === null) {
+  if (!morePhotos && (searchQuery === '' || searchQuery === null)) {
     galleryEl.innerHTML = '';
-
     inputEl.value = '';
-
     iziToast.error(getToastSettings());
-
     return;
   }
+  if (!morePhotos) {
+    galleryEl.innerHTML = '';
+  }
+  try {
+    loaderEl.classList.add('is-visible');
 
-  galleryEl.innerHTML = '';
-  loaderEl.classList.add('is-visible');
-
-  // імітація затримки запиту на сервер
-  setTimeout(() => {
-    fetchPhotosByQuery(searchQuery)
-      .finally(() => {
-        loaderEl.classList.remove('is-visible');
-      })
-      .then(data => {
-        console.log(data.hits); // Отримання масиву hits
-
-        if (data.hits.length === 0) {
-          galleryEl.innerHTML = '';
-          inputEl.value = '';
-          iziToast.error(getToastSettings());
-
-          return;
-        }
-
-        let photos = data.hits; // Отримання масиву фотографій
-        galleryEl.innerHTML = createGalleryCardsTemplate(photos);
-        lightbox.refresh();
-
-        lightbox.on('shown.simplelightbox', () => {
-          const background = document.querySelector('.sl-overlay');
-          const nextBtn = document.querySelector('.sl-next');
-          const prevBtn = document.querySelector('.sl-prev');
-          const closeBtn = document.querySelector('.sl-close');
-
-          background.style.backgroundColor = '#2E2F42';
-          nextBtn.style.color = '#fff';
-          prevBtn.style.color = '#fff';
-          closeBtn.style.color = '#fff';
-        });
-      })
-      .catch(err => {
-        console.log(err);
+    const { data } = await fetchPhotosByQuery(searchQuery, pageNumber);
+    loaderEl.classList.remove('is-visible');
+    const totalPages = Math.ceil(data.totalHits / perPage);
+    if (!morePhotos && data.hits.length === 0) {
+      galleryEl.innerHTML = '';
+      inputEl.value = '';
+      iziToast.error(getToastSettings());
+      pageNumber = 1;
+      loaderEl.classList.remove('is-visible');
+      moresearchEl.classList.remove('is-visible');
+      return;
+    }
+    const getHeightImgCard = () =>
+      document.querySelector('.gallery-item').getBoundingClientRect();
+    if (morePhotos) {
+      galleryEl.insertAdjacentHTML(
+        'beforeend',
+        createGalleryCardsTemplate(data.hits)
+      );
+      window.scrollBy({
+        top: getHeightImgCard().height * 2,
+        left: 0,
+        behavior: 'smooth',
       });
-  }, 2000); //  Затримка 2 секунди
+    } else {
+      galleryEl.innerHTML = createGalleryCardsTemplate(data.hits);
+    }
+    lightbox.refresh();
+
+    lightbox.on('shown.simplelightbox', customizeLightbox);
+
+    pageNumber = pageNumber + 1;
+
+    if (pageNumber <= totalPages) {
+      moresearchEl.classList.add('is-visible');
+    } else {
+      moresearchEl.classList.remove('is-visible');
+      iziToast.info(getToastSettingsEnd());
+    }
+  } catch (err) {
+    loaderEl.classList.remove('is-visible');
+    moresearchEl.classList.remove('is-visible');
+    console.log(err);
+  }
 };
 
-const submitButtonEl = document.querySelector('.search-btn');
-submitButtonEl.addEventListener('click', onSearchFormSubmit);
+submitButtonEl.addEventListener('click', onSearchFormSubmit(false));
+moresearchEl.addEventListener('click', onSearchFormSubmit(true));

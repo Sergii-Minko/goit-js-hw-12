@@ -1,4 +1,3 @@
-
 import errorimgImp from '../img/error.svg';
 import xbtnimg from '../img/btn.png';
 
@@ -65,6 +64,29 @@ export const getToastSettings = () => {
     progressBarColor: '#B51B1B',
     iconColor: '#fff',
     iconUrl: errorimgImp,
+    position: 'topRight',
+    timeout: 2000,
+    onOpening: customizeToast,
+  };
+};
+
+export const customizeLightbox = () => {
+  const background = document.querySelector('.sl-overlay');
+  const nextBtn = document.querySelector('.sl-next');
+  const prevBtn = document.querySelector('.sl-prev');
+  const closeBtn = document.querySelector('.sl-close');
+
+  background.style.backgroundColor = '#2E2F42';
+  nextBtn.style.color = '#fff';
+  prevBtn.style.color = '#fff';
+  closeBtn.style.color = '#fff';
+};
+
+export const getToastSettingsEnd = () => {
+  return {
+    title: '',
+    message: `We're sorry, but you've reached the end of search results.!`,
+    messageColor: '#fff',
     position: 'topRight',
     timeout: 2000,
     onOpening: customizeToast,

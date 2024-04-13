@@ -263,3 +263,33 @@ section {
   align-items: center;
   gap: 0px;
 }
+.more-search-btn {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  border: 0;
+  cursor: pointer;
+  margin-left: 4px;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 150px;
+  height: 40px;
+  background: #4e75ff;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+.more-search-btn:hover,
+.more-search-btn:focus {
+  background: #6c8cff;
+  color: #fff;
+}
+.more-search-btn.is-visible {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
