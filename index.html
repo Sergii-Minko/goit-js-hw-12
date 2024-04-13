@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image gallery</title>
+    <!-- <link rel="stylesheet" href="css/common.css" /> -->
+    
+    <script type="module" crossorigin src="/goit-js-hw-12/commonHelpers.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-403a0c46.js">
+    <link rel="stylesheet" href="/goit-js-hw-12/assets/vendor-a088063d.css">
+    <link rel="stylesheet" href="/goit-js-hw-12/assets/index-99b05c2d.css">
+  </head>
+  <body>
+    <section class="main-section">
+      <div class="container">
+        <form class="search-form js-search-form">
+          <input
+            class="search-input js-search-input"
+            type="text"
+            name="user_country"
+            required
+          />
+          <button class="search-btn" type="submit">Start</button>
+        </form>
+
+        <div class="gallery-wrapper">
+          <span class="loader js-loader"></span>
+          <ul class="gallery js-gallery"></ul>
+        </div>
+      </div>
+    </section>
+
+    
+  </body>
+</html>
