@@ -30,12 +30,16 @@ const onSearchFormSubmit = morePhotos => async event => {
     inputEl.value = '';
     pageNumber = 1;
     galleryEl.innerHTML = '';
+    if (moresearchEl.classList.contains('is-visible')) {
+      moresearchEl.classList.remove('is-visible');
+    }
   }
 
   if (!morePhotos && (searchQuery === '' || searchQuery === null)) {
     galleryEl.innerHTML = '';
     inputEl.value = '';
     iziToast.error(getToastSettings());
+
     return;
   }
 
