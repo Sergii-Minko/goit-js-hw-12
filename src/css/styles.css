@@ -320,4 +320,5 @@ section {
 
 .scrollToTopBtn.is-visible {
   bottom: 16px;
+  border: 0;
 }
