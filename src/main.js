@@ -31,14 +31,14 @@ const onSearchFormSubmit = morePhotos => async event => {
     pageNumber = 1;
     galleryEl.innerHTML = '';
     if (moresearchEl.classList.contains('is-visible')) {
+      console.log('remove');
       moresearchEl.classList.remove('is-visible');
     }
   }
 
   if (!morePhotos && (searchQuery === '' || searchQuery === null)) {
-    galleryEl.innerHTML = '';
-    inputEl.value = '';
     iziToast.error(getToastSettings());
+    // moresearchEl.classList.remove('is-visible');
 
     return;
   }
