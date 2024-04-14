@@ -19,10 +19,18 @@ const lightbox = new SimpleLightbox('.gallery a', {
 });
 let pageNumber = 1;
 const perPage = 40;
+let searchQuery = '';
+
+var scrollToTopBtn = document.querySelector('.scrollToTopBtn');
 
 const onSearchFormSubmit = morePhotos => async event => {
   event.preventDefault();
-  const searchQuery = inputEl.value.trim();
+  if (!morePhotos) {
+    searchQuery = inputEl.value.trim();
+    inputEl.value = '';
+    pageNumber = 1;
+    galleryEl.innerHTML = '';
+  }
 
   if (!morePhotos && (searchQuery === '' || searchQuery === null)) {
     galleryEl.innerHTML = '';
@@ -30,10 +38,7 @@ const onSearchFormSubmit = morePhotos => async event => {
     iziToast.error(getToastSettings());
     return;
   }
-  if (!morePhotos) {
-    pageNumber = 1;
-    galleryEl.innerHTML = '';
-  }
+
   try {
     loaderEl.classList.add('is-visible');
 
@@ -61,6 +66,7 @@ const onSearchFormSubmit = morePhotos => async event => {
         left: 0,
         behavior: 'smooth',
       });
+      // scrollToTopBtn.classList.add('is-visible');
     } else {
       galleryEl.innerHTML = createGalleryCardsTemplate(data.hits);
     }
@@ -85,3 +91,20 @@ const onSearchFormSubmit = morePhotos => async event => {
 
 submitButtonEl.addEventListener('click', onSearchFormSubmit(false));
 moresearchEl.addEventListener('click', onSearchFormSubmit(true));
+// Додаємо обробник події для кліку на кнопці
+scrollToTopBtn.addEventListener('click', event => {
+  event.preventDefault();
+  // Прокручуємо сторінку вверх
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth', // Зробити прокрутку плавною
+  });
+  console.log('clicked');
+  // Відключаємо клас "is-visible" для кнопки
+  // scrollToTopBtn.classList.remove('is-visible');
+});
+window.addEventListener('scroll', event =>
+  window.scrollY >= 32
+    ? scrollToTopBtn.classList.add('is-visible')
+    : scrollToTopBtn.classList.remove('is-visible')
+);

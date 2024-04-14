@@ -283,14 +283,41 @@ section {
   color: #fff;
   margin-bottom: 30;
 }
+.scrollToTopBtn:hover,
+.scrollToTopBtn:focus,
+.more-search-btn:hover,
+.more-search-btn:focus {
+  background: #6c8cff;
+}
 
 .more-search-btn:hover,
 .more-search-btn:focus {
   background: #6c8cff;
-  color: #fff;
 }
 .more-search-btn.is-visible {
   display: block;
   opacity: 1;
   visibility: visible;
+}
+.scrollToTopBtn {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  background: #4e75ff;
+  bottom: -66px;
+  right: 2px;
+  text-decoration: none;
+  text-align: center;
+  line-height: 50px;
+  color: white;
+  font-size: 22px;
+  transition: all 0.3s;
+  z-index: 1000;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.scrollToTopBtn.is-visible {
+  bottom: 16px;
 }
